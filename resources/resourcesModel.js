@@ -27,9 +27,16 @@ function insert(resource) {
     .then(([id]) => getResources(id))
 }
 
+function remove(id){
+    return db('resources as r')
+    .where('r.resource_id', id)
+    .del()
+}
+
 module.exports = {
     getResources,
     insert,
     getProjectResources,
     addResourceToProject,
+    remove,
 }

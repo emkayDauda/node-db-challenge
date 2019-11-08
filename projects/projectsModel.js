@@ -32,7 +32,14 @@ function add(project) {
     .then(([id]) => id ? this.getProjects(id) : null)
 }
 
+function remove(id){
+    return db('projects as p')
+    .where('p.project_id', id)
+    .del()
+}
+
 module.exports = {
     getProjects,
     add,
+    remove,
 }

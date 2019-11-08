@@ -19,8 +19,15 @@ function insert(task) {
     .then(([id]) => this.get(id))
 }
 
+function remove(id){
+    return db('tasks as t')
+    .where('t.task_id', id)
+    .del()
+}
+
 module.exports = {
     get,
     insert,
     getProjectTasks,
+    remove
 }
