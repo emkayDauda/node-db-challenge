@@ -1,10 +1,26 @@
 const db = require('../data/dbConfig')
+const tasksDb = require('../tasks/tasksModel')
+const resourcesDb = require('../resources/resourcesModel')
 
 function getProjects(id) {
     let query = db('projects as p')
 
     if (id) {
         query.where('p.project_id', id).first()
+        const tasks = tasksDb.getProjectTasks(id)
+
+        const promises = [query, tasks, resourcesDb.getProjectResources(id)]
+
+        return Promise.all(promises)
+        .then(function(results){
+            let [project, tasks, resources] = results;
+
+            return {
+                ...project, 
+                tasks,
+                resources,
+            }
+        })
     }
 
     return query;

@@ -8,6 +8,13 @@ function getResources(id) {
     return query
 }
 
+function getProjectResources(project_id) {
+    return db('projects_resource as pr')
+    .join('resources as r', 'pr.resource_id', 'r.resource_id' )
+    .where('project_id', project_id)
+    .select('r.resource_id', 'r.resource_name', 'r.description')
+}
+
 function insert(resource) {
     return db('resources')
     .insert(resource)
@@ -17,4 +24,5 @@ function insert(resource) {
 module.exports = {
     getResources,
     insert,
+    getProjectResources,
 }

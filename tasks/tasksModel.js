@@ -8,6 +8,11 @@ function get(id) {
     return query;
 }
 
+function getProjectTasks(id) {
+    return db('tasks as t')
+    .where('t.project_id', id)
+}
+
 function insert(task) {
     return db('tasks')
     .insert(task)
@@ -17,4 +22,5 @@ function insert(task) {
 module.exports = {
     get,
     insert,
+    getProjectTasks,
 }
