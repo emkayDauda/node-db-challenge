@@ -51,6 +51,7 @@ projects.delete('/id', projectIdValidator, (req, res) => {
             res.status(200).json({message: 'deleted', data: req.valProject})
         }
     }).catch(err => res.status(500).json({error: true, message: err.message}))
+    
 })
 
 
