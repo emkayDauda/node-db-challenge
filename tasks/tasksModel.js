@@ -9,7 +9,7 @@ function get(id) {
 }
 
 function insert(task) {
-    db('tasks')
+    return db('tasks')
     .insert(task)
     .then(([id]) => this.get(id))
 }
