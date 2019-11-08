@@ -30,6 +30,14 @@ projects.get('/:id/resources', projectIdValidator, (req, res) => {
     .catch(err => res.status(500).json({message: err.message}))
 })
 
+projects.post('/:id/resources', projectIdValidator, resourceIdValidator, (req, res) => {
+    resource.addResourceToProject(req.valProject.project_id, req.body.resource_id)
+    .then(resources => {
+        res.status(200).json({message: 'project resources', data: resources})
+    })
+    .catch(err => res.status(500).json({message: err.message}))
+})
+
 projects.post('/', projectBodyValidator, (req, res) => {
     dbHelper.add(req.valProjBody)
     .then(data => res.status(200).json(data))
@@ -56,5 +64,16 @@ function projectBodyValidator(req, res, next){
         next()
     }
 }
+
+function resourceIdValidator(req, res, next) {
+    resource.getResources(req.body.resource_id)
+      .then(resource => {
+        if (resource) {
+          req.valResource = resource;
+          next();
+        }
+      })
+      .catch(err => res.status(500).json({ message: err.message }));
+  }
 
 module.exports = projects;

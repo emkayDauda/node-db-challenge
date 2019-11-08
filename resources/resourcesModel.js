@@ -15,6 +15,12 @@ function getProjectResources(project_id) {
     .select('r.resource_id', 'r.resource_name', 'r.description')
 }
 
+function addResourceToProject(project_id, resource_id) {
+    return db('projects_resource')
+    .insert({project_id, resource_id})
+    .then((_id) => this.getProjectResources(project_id))
+}
+
 function insert(resource) {
     return db('resources')
     .insert(resource)
@@ -25,4 +31,5 @@ module.exports = {
     getResources,
     insert,
     getProjectResources,
+    addResourceToProject,
 }
