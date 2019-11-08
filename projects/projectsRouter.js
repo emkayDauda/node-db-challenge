@@ -44,6 +44,17 @@ projects.post('/', projectBodyValidator, (req, res) => {
     .catch(err => res.status(500).json({message: err.message}))
 })
 
+projects.delete('/id', projectIdValidator, (req, res) => {
+    dbHelper.remove(req.valProject.project_id)
+    .then(flag => {
+        if (flag) {
+            res.status(200).json({message: 'deleted', data: req.valProject})
+        }
+    }).catch(err => res.status(500).json({error: true, message: err.message}))
+})
+
+
+
 function projectIdValidator(req, res, next) {
     const id = req.params.id
     dbHelper.getProjects(id)
